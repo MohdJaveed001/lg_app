@@ -1,0 +1,35 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: lgappdeploymnet
+spec: 
+  replicas: 3
+  selector: 
+    matchLabels:
+      app: lgapp
+  template:
+    metadata:
+      name: lgapppod
+      labels: 
+        app: lgapp
+    spec: 
+      containers:
+        - name: lgappcontainer
+          image: javeedit/lg_app
+          ports:
+            - containerPort: 8080 
+---
+apiVersion: v1
+kind: Service
+metadata: 
+  name: lgappsvc
+spec: 
+  type: NodePort
+  selector:
+    app: lgapp
+  ports:  
+    - port: 80
+      targetPort: 8080
+      nodePort: 30001
+...
